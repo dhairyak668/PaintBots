@@ -14,7 +14,7 @@
  * @note The possible values for Color are Color.RED, Color.BLUE, and Color.WHITE.
  * @note The possible values for Direction are Direction.NORTH, Direction.SOUTH, Direction.EAST, and Direction.WEST.
  * @note The possible values for SquareType are SquareType.EMPTY, SquareType.WALL, SquareType.ROCK, and SquareType.FOG.
- * @note presentRobot is true if its RED robot is present on the square, false if BLUE robot is present on the square.
+ * @note presentRobot is true if its RED robot is present on the square, false if BLUE robot is present on the square. 
  * @see InternalBoardSquare
  */
 class ExternalBoardSquare 

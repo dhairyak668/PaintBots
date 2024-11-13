@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <fstream>
+#include <cctype>
 using namespace std;
 /**
  * @class Config
@@ -18,7 +20,8 @@ class Config{
     int fog_lower_bound;
     int fog_upper_bound;
     int long_range_limit;
-    void loadFromFile(const string& filename);
+    void trimWhitespace(string& str);
+    void toLowerCase(string& str);
 
     public:
 
@@ -28,7 +31,7 @@ class Config{
      */
     Config();
 
-    // Config(const string& filename);
+    Config(const string& filename);
 
     /**
      * @brief Get the hit duration.
