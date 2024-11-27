@@ -1,5 +1,5 @@
 #include "ExternalBoardSquare.h"
-#include "InternalBoardSqaure.h"
+#include "InternalBoardSquare.h"
 #include "BoardSquare.h"
 
 ExternalBoardSquare::ExternalBoardSquare(const InternalBoardSquare &square)
