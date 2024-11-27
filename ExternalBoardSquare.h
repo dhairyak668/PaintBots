@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include "BoardSquare.h"
-#include "InternalBoardSqaure.h"
+#include "InternalBoardSquare.h"
 
 /**
  * @class ExternalBoardSquare

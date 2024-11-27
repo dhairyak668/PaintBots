@@ -1,4 +1,4 @@
-#include "InternalBoardSqaure.h"
+#include "InternalBoardSquare.h"
 #include "BoardSquare.h"
 
 Color InternalBoardSquare::getSquareColor() const
