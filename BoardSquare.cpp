@@ -1,15 +1,18 @@
 #include "BoardSquare.h"
 
 BoardSquare::BoardSquare(){
-    squareColor = BoardEnums::Color::WHITE;
-    robotDir = BoardEnums::Direction::NORTH;
-    squareType = BoardEnums::SquareType::EMPTY;
-    robotColor = RobotEnums::RobotColor::NONE;
+    squareColor = SquareColor::WHITE;
+    robotDir = Direction::NORTH;
+    squareType = SquareType::EMPTY;
+    robotColor = RobotColor::NONE;
 }
 
-BoardSquare::BoardSquare(BoardEnums::Color color, BoardEnums::Direction dir, BoardEnums::SquareType type, RobotEnums::RobotColor robot){
+BoardSquare::BoardSquare(SquareColor color, Direction dir, SquareType type, RobotColor robotColor){
     squareColor = color;
     robotDir = dir;
     squareType = type;
-    robotColor = robot;
+    robotColor = robotColor;
+}
+
+BoardSquare::~BoardSquare(){
 }

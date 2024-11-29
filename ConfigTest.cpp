@@ -1,12 +1,12 @@
-#include "Config.h"
+#include "ConfigTest.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <cstdio> // for remove()
 using namespace std;
 
-bool testParameters(const Config& config, int hit_duration = 20, int paintblob_limit = 30, int rock_lower_bound = 10,
- int rock_upper_bound = 20, int fog_lower_bound = 5, int fog_upper_bound = 10, int long_range_limit = 30){
+bool ConfigTest::testParameters(const Config& config, int hit_duration, int paintblob_limit, int rock_lower_bound,
+ int rock_upper_bound, int fog_lower_bound, int fog_upper_bound, int long_range_limit){
     return((config.getHitDuration() == hit_duration) &&
     (config.getPaintBlobLimit() == paintblob_limit) &&
     (config.getRockLowerBound() == rock_lower_bound) &&
@@ -16,32 +16,36 @@ bool testParameters(const Config& config, int hit_duration = 20, int paintblob_l
     (config.getLongRangeLimit() == long_range_limit)); 
 }
 
-void testDefaultConstructor(){
+bool ConfigTest::testDefaultConstructor(){
     try{
         Config config;
         bool passed = testParameters(config);
         cout << "Checking Default Constructors & Getter Functions: " << (passed ? "PASS" : "FAIL") << endl;
+        return passed;
     }
     catch(...){
         cout << "Checking Default Constructor & Getter Functions: FAIL" << endl;
+        return false;
     }
 }
 
-void testBadFileName(){
+bool ConfigTest::testBadFileName(){
     try{
         Config config("badfile.txt");
         cout << "Checking Bad File Name: FAIL" << endl;
+        return false;
     }
     catch(const runtime_error& e){
         cout << "Checking Bad File Name: PASS" << endl;
+        return true;
     }
 }
 
-void testGoodFileName(){
+bool ConfigTest::testGoodFileName(){
     ofstream file("goodfile.txt");
     if (!file.is_open()) {
         cout << "Checking Good File Name: FAIL (could not open file)" << endl;
-        return;
+        return false;
     }
     file << "hit_duration = 10" << endl;
     file << "paintblob_limit = 20" << endl;
@@ -55,36 +59,42 @@ void testGoodFileName(){
         Config config("goodfile.txt");
         bool passed = testParameters(config, 10, 20, 5, 15, 2, 8, 25);
         cout << "Checking Good File Name: " << (passed ? "PASS" : "FAIL") << endl;
+        remove("goodfile.txt");
+        return passed;
     }
     catch(...){
         cout << "Checking Good File Name: FAIL" << endl;
+        remove("goodfile.txt");
+        return false;
     }
-    remove("goodfile.txt");
 }
 
-void testEmptyFile(){
+bool ConfigTest::testEmptyFile(){
     ofstream file("emptyfile.txt");
     if (!file.is_open()) {
         cout << "Checking Empty File: FAIL (could not open file)" << endl;
-        return;
+        return false;
     }
     file.close();
     try{
         Config config("emptyfile.txt");
         bool passed = testParameters(config);
         cout << "Checking Empty File: " << (passed ? "PASS" : "FAIL") << endl;
+        remove("emptyfile.txt");
+        return passed;
     }
     catch(...){
         cout << "Checking Empty File: FAIL" << endl;
+        remove("emptyfile.txt");
+        return false;
     }
-    remove("emptyfile.txt");
 }
 
-void testCommentOnlyFile(){
+bool ConfigTest::testCommentOnlyFile(){
     ofstream file("commentfile.txt");
     if (!file.is_open()) {
         cout << "Checking Comment Only File: FAIL (could not open file)" << endl;
-        return;
+        return false;
     }
     file << "# This is a comment" << endl;
     file << "   \t" << endl;
@@ -93,18 +103,21 @@ void testCommentOnlyFile(){
         Config config("commentfile.txt");
         bool passed = testParameters(config);
         cout << "Checking Comment Only File: " << (passed ? "PASS" : "FAIL") << endl;
+        remove("commentfile.txt");
+        return passed;
     }
     catch(...){
         cout << "Checking Comment Only File: FAIL" << endl;
+        remove("commentfile.txt");
+        return false;
     }
-    remove("commentfile.txt");
 }
 
-void testWhiteSpaceOnlyFile(){
+bool ConfigTest::testWhiteSpaceOnlyFile(){
     ofstream file("whitespacefile.txt");
     if (!file.is_open()) {
         cout << "Checking White Space Only File: FAIL (could not open file)" << endl;
-        return;
+        return false;
     }
     file << "   \t" << endl;
     file.close();
@@ -112,18 +125,21 @@ void testWhiteSpaceOnlyFile(){
         Config config("whitespacefile.txt");
         bool passed = testParameters(config);
         cout << "Checking White Space Only File: " << (passed ? "PASS" : "FAIL") << endl;
+        remove("whitespacefile.txt");
+        return passed;
     }
     catch(...){
         cout << "Checking White Space Only File: FAIL" << endl;
+        remove("whitespacefile.txt");
+        return false;
     }
-    remove("whitespacefile.txt");
 }
 
-void testValidConfigFileMissingParameters(){
+bool ConfigTest::testValidConfigFileMissingParameters(){
     ofstream file("validfile.txt");
     if (!file.is_open()) {
         cout << "Checking Valid Config File Missing Parameters: FAIL (could not open file)" << endl;
-        return;
+        return false;
     }
     file << "hit_duration = 10" << endl;
     file << "paintblob_limit = 20" << endl;
@@ -132,18 +148,21 @@ void testValidConfigFileMissingParameters(){
         Config config("validfile.txt");
         bool passed = testParameters(config, 10, 20, 10, 20, 5, 10, 30);
         cout << "Checking Valid Config File Missing Parameters: " << (passed ? "PASS" : "FAIL") << endl;
+        remove("validfile.txt");
+        return passed;
     }
     catch(...){
         cout << "Checking Valid Config File Missing Parameters: FAIL" << endl;
+        remove("validfile.txt");
+        return false;
     }
-    remove("validfile.txt");
 }
 
-void testInvalidConfigFileMissingParameters(){
+bool ConfigTest::testInvalidConfigFileMissingParameters(){
     ofstream file("invalidfile.txt");
     if (!file.is_open()) {
         cout << "Checking Invalid Config File Missing Parameters: FAIL (could not open file)" << endl;
-        return;
+        return false;
     }
     file << "hit_duration = 10" << endl;
     file << "paintblob_limit = 20" << endl;
@@ -155,18 +174,21 @@ void testInvalidConfigFileMissingParameters(){
     try{
         Config config("invalidfile.txt");
         cout << "Checking Invalid Config File Missing Parameters: FAIL" << endl;
+        remove("invalidfile.txt");
+        return false;
     }
     catch(const runtime_error& e){
         cout << "Checking Invalid Config File Missing Parameters: PASS" << endl;
+        remove("invalidfile.txt");
+        return true;
     }
-    remove("invalidfile.txt");
 }
 
-void testInvalidConfigFileInvalidValues(){
+bool ConfigTest::testInvalidConfigFileInvalidValues(){
     ofstream file("invalidfile.txt");
     if (!file.is_open()) {
         cout << "Checking Invalid Config File Invalid Values: FAIL (could not open file)" << endl;
-        return;
+        return false;
     }
     file << "hit_duration = 10" << endl;
     file << "paintblob_limit = invalid" << endl;
@@ -174,54 +196,63 @@ void testInvalidConfigFileInvalidValues(){
     try{
         Config config("invalidfile.txt");
         cout << "Checking Invalid Config File Invalid Values: FAIL" << endl;
+        remove("invalidfile.txt");
+        return false;
     }
     catch(const runtime_error& e){
         cout << "Checking Invalid Config File Invalid Values: PASS" << endl;
+        remove("invalidfile.txt");
+        return true;
     }
-    remove("invalidfile.txt");
 }
 
-void testNoEqualsInParameterLine(){
+bool ConfigTest::testNoEqualsInParameterLine(){
     ofstream file("invalidfile.txt");
     if (!file.is_open()) {
         cout << "Checking No Equals In Parameter Line: FAIL (could not open file)" << endl;
-        return;
+        return false;
     }
     file << "hit_duration 10" << endl;
     file.close();
     try{
         Config config("invalidfile.txt");
         cout << "Checking No Equals In Parameter Line: FAIL" << endl;
+        remove("invalidfile.txt");
+        return false;
     }
     catch(const runtime_error& e){
         cout << "Checking No Equals In Parameter Line: PASS" << endl;
+        remove("invalidfile.txt");
+        return true;
     }
-    remove("invalidfile.txt");
 }
 
-void testInvalidKeyInParameterLine(){
+bool ConfigTest::testInvalidKeyInParameterLine(){
     ofstream file("invalidfile.txt");
     if (!file.is_open()) {
         cout << "Checking Invalid Key In Parameter Line: FAIL (could not open file)" << endl;
-        return;
+        return false;
     }
     file << "invalid_key = 10" << endl;
     file.close();
     try{
         Config config("invalidfile.txt");
         cout << "Checking Invalid Key In Parameter Line: FAIL" << endl;
+        remove("invalidfile.txt");
+        return false;
     }
     catch(const runtime_error& e){
         cout << "Checking Invalid Key In Parameter Line: PASS" << endl;
+        remove("invalidfile.txt");
+        return true;
     }
-    remove("invalidfile.txt");
 }
 
-void testMixedCaseKeys(){
+bool ConfigTest::testMixedCaseKeys(){
     ofstream file("mixedcasefile.txt");
     if(!file.is_open()){
         cout << " Checking Mixed Case Keys: FAIL (could not open file)" << endl;
-        return;
+        return false;
     }
     file << "Hit_Duration = 10" << endl;
     file << "PaintBlob_LiMit = 20" << endl;
@@ -231,18 +262,21 @@ void testMixedCaseKeys(){
         Config config("mixedcasefile.txt");
         bool passed = testParameters(config, 10, 20, 3, 20, 5, 10, 30);
         cout << "Checking Mixed Case Keys: " << (passed ? "PASS" : "FAIL") << endl;
+        remove("mixedcasefile.txt");
+        return passed;
     }
     catch(...){
         cout << "Checking Mixed Case Keys: FAIL" << endl;
+        remove("mixedcasefile.txt");
+        return false;
     }
-    remove("mixedcasefile.txt");
 }
 
-void testInValidBounds(){
+bool ConfigTest::testInvalidBounds(){
     ofstream file("invalidfile.txt");
     if(!file.is_open()){
         cout << "Checking Invalid Bounds: FAIL (could not open file)" << endl;
-        return;
+        return false;
     }
     file << "hit_duration = 10" << endl;
     file << "paintblob_limit = 20" << endl;
@@ -254,27 +288,44 @@ void testInValidBounds(){
     try{
         Config config("invalidfile.txt");
         cout << "Checking Invalid Bounds: FAIL" << endl;
+        remove("invalidfile.txt");
+        return false;
     }
     catch(const runtime_error& e){
         cout << "Checking Invalid Bounds: PASS" << endl;
+        remove("invalidfile.txt");
+        return true;
     }
-    remove("invalidfile.txt");
+}
+
+bool ConfigTest::doTests(){
+    cout << "Config Class Unit Tests" << endl << endl;
+    cout << endl;
+    bool allPassed = true;
+    allPassed &= testDefaultConstructor();
+    allPassed &= testBadFileName();
+    allPassed &= testGoodFileName();
+    allPassed &= testEmptyFile();
+    allPassed &= testCommentOnlyFile();
+    allPassed &= testWhiteSpaceOnlyFile();
+    allPassed &= testValidConfigFileMissingParameters();
+    allPassed &= testInvalidConfigFileMissingParameters();
+    allPassed &= testInvalidConfigFileInvalidValues();
+    allPassed &= testNoEqualsInParameterLine();
+    allPassed &= testInvalidKeyInParameterLine();
+    allPassed &= testMixedCaseKeys();
+    allPassed &= testInvalidBounds();
+    if(allPassed){
+        cout << "All Config tests passed." << endl;
+    }
+    else{
+        cout << "Some Config tests failed." << endl;
+    }
+    return allPassed;
 }
 
 int main(){
-    cout << "Config Class Unit Tests" << endl << endl;
-    testDefaultConstructor();
-    testBadFileName();
-    testGoodFileName();
-    testEmptyFile();
-    testCommentOnlyFile();
-    testWhiteSpaceOnlyFile();
-    testValidConfigFileMissingParameters();
-    testInvalidConfigFileMissingParameters();
-    testInvalidConfigFileInvalidValues();
-    testNoEqualsInParameterLine();
-    testInvalidKeyInParameterLine();
-    testMixedCaseKeys();
-    testInValidBounds();
+    ConfigTest test;
+    test.doTests();
     return 0;
 }
