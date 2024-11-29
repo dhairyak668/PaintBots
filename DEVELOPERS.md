@@ -122,3 +122,5 @@ Sure, here is the developer documentation in Markdown format:
     - `bool InternalBoardSquare::redRobotPresent() const`: Returns true if the red robot is present on the square.
     - `bool InternalBoardSquare::blueRobotPresent() const`: Returns true if the blue robot is present on the square.
 
+
+assumed for game board that (0,0) is bottom left corner

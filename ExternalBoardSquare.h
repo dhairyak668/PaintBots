@@ -19,7 +19,10 @@
 class ExternalBoardSquare : public BoardSquare
 {
     public:
-        ExternalBoardSquare(const InternalBoardSquare &square){
+        ExternalBoardSquare(): BoardSquare(){
+        }
+
+        ExternalBoardSquare(const InternalBoardSquare& square){
             squareColor = square.getSquareColor();
             robotDir = square.robotDirection();
             squareType = square.getSquareType();

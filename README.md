@@ -32,6 +32,10 @@ PaintBots is a C++ game simulation where players control robots on a 15x15 board
     - The constructor only accepts valid keys that are defined member variables. Else throws runtime_error
     - The constructor only accepts integer values for input values. Catches invalid_argument and throws runtime_error
     - The constructor assumes that the configuration file is well formed. Throws error in case of invalid formatting.
+
+2. `getSquare()` method may throw out_of_range exception. No checks have been placed where `getSquare()` is used
+
+3. `getShortRangeScan()` and `getLongRangeScan` may throw bad allocation error
     
  
  

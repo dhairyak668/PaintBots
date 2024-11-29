@@ -25,12 +25,13 @@ class InternalBoardSquare: public BoardSquare{
             squareType = type;
         }
 
-        inline void setDirection(Direction dir){
+        inline void setRobotDirection(Direction dir){
             robotDir = dir;
         }
 
         inline void setRobotColor(RobotColor color){
             robotColor = color;
         }
+
     
 };

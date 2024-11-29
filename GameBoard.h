@@ -33,6 +33,8 @@ class GameBoard{
         int blueRobotScore;
         int redRobotIndex[2];
         int blueRobotIndex[2];
+        SquareColor redRobotPaintColor;
+        SquareColor blueRobotPaintColor;
 
         //random number generator
         std::mt19937 gen; 
@@ -55,10 +57,17 @@ class GameBoard{
         void setFogRandom();
         void setRobotsRandom();
         void setBorderWalls();
-        
+
         InternalBoardSquare& getEmptySquare();
 
+        void rotateLeft(InternalBoardSquare& square);
+        void rotateRight(InternalBoardSquare& square);
+        void moveForward(int (&robotIndex)[2], RobotColor rc);
+
+        ExternalBoardSquare** getFogShortRangeScan(RobotColor rc);
+
     public:
+    
         static GameBoard* getInstance(const std::string& password);
 
         static GameBoard* getInstance(const std::string& password, const Config& config);
@@ -94,6 +103,8 @@ class GameBoard{
         ExternalBoardSquare** getLongRangeScan();
 
         ExternalBoardSquare** getShortRangeScan(RobotColor rc);
+
+        bool PaintBlobHit(RobotMoveRequest& mr);
 };
 
 GameBoard* GameBoard::uniqueInstance = nullptr;
