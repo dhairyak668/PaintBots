@@ -12,7 +12,8 @@ enum SquareType {
     EMPTY,
     WALL,
     ROCK,
-    FOG
+    FOG,
+    ROCKFOG
 };
 
 enum SquareColor {
@@ -24,7 +25,7 @@ enum SquareColor {
 enum RobotColor {
     XRED,
     XBLUE,
-    NONE
+    XNONE
 };
 
 
@@ -34,10 +35,10 @@ enum RobotColor {
  * @note The possible values for SquareColor are SquareColor.RED, SquareColor.BLUE, and SquareColor.WHITE.
  * @note The possible values for Direction are Direction.NORTH, Direction.SOUTH, Direction.EAST, and Direction.WEST.
  * @note The possible values for SquareType are SquareType.EMPTY, SquareType.WALL, SquareType.ROCK, and SquareType.FOG.
- * @note The possible values for RobotColor are RobotColor.RED, RobotColor.BLUE, and RobotColor.NONE.
+ * @note The possible values for RobotColor are RobotColor.RED, RobotColor.BLUE, and RobotColor.XNONE.
  */
 class BoardSquare {
-    protected:
+    private:
         SquareColor squareColor;
         Direction robotDir;
         SquareType squareType;
@@ -62,7 +63,7 @@ class BoardSquare {
          * Destroys the BoardSquare.
          */
         virtual ~BoardSquare();
-        
+
         /**
          * @return the color of the square. Possible values are SquareColor.RED, SquareColor.BLUE, SquareColor.WHITE.
          */
@@ -75,6 +76,13 @@ class BoardSquare {
          */
         inline SquareType getSquareType() const{
             return squareType;
+        }
+
+        /**
+         * @return the color of the robot on the square. Possible values are RobotColor.XRED, RobotColor.XBLUE, RobotColor.XNONE.
+         */
+        inline RobotColor getRobotColor() const{
+            return robotColor;
         }
 
         /**
@@ -98,6 +106,21 @@ class BoardSquare {
             return robotColor == RobotColor::XBLUE;
         }
 
+        inline void setSquareColor(SquareColor color){
+            squareColor = color;
+        }
+
+        inline void setSquareType(SquareType type){
+            squareType = type;
+        }
+
+        inline void setRobotDirection(Direction dir){
+            robotDir = dir;
+        }
+
+        inline void setRobotColor(RobotColor color){
+            robotColor = color;
+        }
         
 
 };

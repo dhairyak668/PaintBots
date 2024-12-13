@@ -16,22 +16,5 @@
  * @see BoardSquare
  */
 class InternalBoardSquare: public BoardSquare{
-    public:
-        inline void setSquareColor(SquareColor color){
-            squareColor = color;
-        }
 
-        inline void setSquareType(SquareType type){
-            squareType = type;
-        }
-
-        inline void setRobotDirection(Direction dir){
-            robotDir = dir;
-        }
-
-        inline void setRobotColor(RobotColor color){
-            robotColor = color;
-        }
-
-    
 };

@@ -23,8 +23,9 @@ class ExternalBoardSquare : public BoardSquare
         }
 
         ExternalBoardSquare(const InternalBoardSquare& square){
-            squareColor = square.getSquareColor();
-            robotDir = square.robotDirection();
-            squareType = square.getSquareType();
+            setSquareColor(square.getSquareColor());
+            setRobotDirection(square.robotDirection());
+            setSquareType(square.getSquareType());
         }
+        
 };

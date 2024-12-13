@@ -2,10 +2,12 @@
 #include <iostream>
 bool ExternalBoardSquareTest::testConstructorWithInternalBoardSquare(){
     InternalBoardSquare square;
+    square.setSquareColor(SquareColor::RED);
     ExternalBoardSquare externalSquare(square);
     bool passed = (externalSquare.getSquareColor() == square.getSquareColor()) &&
                   (externalSquare.robotDirection() == square.robotDirection()) &&
                   (externalSquare.getSquareType() == square.getSquareType());
+    std::cout << "Checking ExternalBoardSquare constructor with InternalBoardSquare: " << (passed ? "PASS" : "FAIL") << std::endl;
     return passed;
 }
 
