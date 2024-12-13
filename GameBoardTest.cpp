@@ -2,6 +2,7 @@
 #include <string>
 #include "GameBoardTest.h"  
 #include "GameBoard.h"
+#include "PlainDisplay.h"
 
 const int BOARD_SIZE = 17;
 const std::string validPassword = "xyzzy";
@@ -24,6 +25,7 @@ bool GameBoardTest::doTests(){
     allPassed &= testSetRobotsRandom();
     allPassed &= testEventUpdate();
     allPassed &= testNotifyObservers();
+    allPassed &= testPlainDisplayUpdate();
 
     if (allPassed) {
         std::cout << "All GameBoard tests passed." << std::endl;
@@ -295,6 +297,15 @@ bool GameBoardTest::testAddRemoveObserver(){
     }
     cout << "Testing Remove Observer : PASS" << endl;
     
+    GameBoard::destroyInstance();
+    return true;
+}
+
+bool GameBoardTest::testPlainDisplayUpdate(){
+    GameBoard* gameBoard = GameBoard::getInstance(validPassword);
+    PlainDisplay display(gameBoard, 17);
+    gameBoard->addObserver(&display);
+    display.display();
     GameBoard::destroyInstance();
     return true;
 }

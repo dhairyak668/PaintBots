@@ -16,8 +16,8 @@ ExternalBoardSquareTest: ExternalBoardSquareTest.o ExternalBoardSquare.o BoardSq
 InternalBoardSquareTest: InternalBoardSquareTest.o InternalBoardSquare.o BoardSquare.o
 	g++ $(CXXFLAGS) -o InternalBoardSquareTest InternalBoardSquareTest.o InternalBoardSquare.o BoardSquare.o -lm
 
-GameBoardTest: GameBoardTest.o GameBoard.o BoardSquare.o ExternalBoardSquare.o InternalBoardSquare.o Config.o
-	g++ $(CXXFLAGS) -o GameBoardTest GameBoardTest.o GameBoard.o BoardSquare.o ExternalBoardSquare.o InternalBoardSquare.o Config.o -lm
+GameBoardTest: GameBoardTest.o GameBoard.o BoardSquare.o ExternalBoardSquare.o InternalBoardSquare.o Config.o PlainDisplay.o
+	g++ $(CXXFLAGS) -o GameBoardTest GameBoardTest.o GameBoard.o BoardSquare.o ExternalBoardSquare.o InternalBoardSquare.o Config.o PlainDisplay.o -lm
 
 ConfigTest.o: ConfigTest.cpp Config.h ITest.h
 	g++ $(CXXFLAGS) -c ConfigTest.cpp
@@ -48,6 +48,9 @@ GameBoardTest.o: GameBoardTest.cpp GameBoard.h ITest.h ObserverPattern.h
 
 GameBoard.o: GameBoard.cpp GameBoard.h BoardSquare.h ExternalBoardSquare.h InternalBoardSquare.h ObserverPattern.h Config.h
 	g++ $(CXXFLAGS) -c GameBoard.cpp
+
+PlainDisplay.o: PlainDisplay.cpp PlainDisplay.h ObserverPattern.h
+	g++ $(CXXFLAGS) -c PlainDisplay.cpp
 
 clean:
 	rm -f *.o ConfigTest BoardSquareTest ExternalBoardSquareTest InternalBoardSquareTest GameBoardTest

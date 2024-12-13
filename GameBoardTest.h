@@ -145,4 +145,6 @@ class GameBoardTest :public ITest{
      * @return True if the test passes, false otherwise.
      */
     bool testAddRemoveObserver();
+
+    bool testPlainDisplayUpdate();
 };
