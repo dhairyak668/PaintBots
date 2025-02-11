@@ -1,4 +1,4 @@
-# coms3270P2 PaintBots
+# PaintBots
 
 ## Project Overview
 
